@@ -1,30 +1,32 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:test_swipes/main.dart';
+import 'package:test_swipes/src/components/central_box.dart';
+import 'package:test_swipes/src/components/squared_button.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Swipe widgets tests', (WidgetTester tester) async {
     await tester.pumpWidget(MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.idle();
+    await tester.pump(Duration.zero);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Check our widgets exists
+    expect(
+        find.byWidgetPredicate(
+            (Widget widget) => widget is SquaredButton && widget.title == '-'),
+        findsOneWidget);
+    expect(find.widgetWithText(SquaredButton, '+'), findsOneWidget);
+    expect(find.byWidgetPredicate((Widget widget) => widget is CentralBox),
+        findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Check that BLoC has initialised
+    expect(find.widgetWithText(CentralBox, '1'), findsOneWidget);
+
+    // Check that number increased / decreased
+    await tester.tap(find.widgetWithText(SquaredButton, '+'));
+    await tester.pump(Duration.zero);
+    expect(find.widgetWithText(CentralBox, '1'), findsOneWidget);
   });
 }
