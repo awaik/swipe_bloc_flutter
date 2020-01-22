@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SquaredButton extends StatelessWidget {
-  SquaredButton({this.title, this.onPressed});
+  SquaredButton({this.title, this.onPressed, this.buttonKey});
 
   final String title;
   final Function onPressed;
+  final String buttonKey;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +17,7 @@ class SquaredButton extends StatelessWidget {
           color: Color(0x66FFFFFF),
           borderRadius: BorderRadius.circular(5.0),
           child: MaterialButton(
+            key: Key(buttonKey),
             onPressed: onPressed,
             minWidth: 22.0,
             height: 22.0,

@@ -6,27 +6,34 @@ import 'package:test_swipes/src/components/central_box.dart';
 import 'package:test_swipes/src/components/squared_button.dart';
 
 void main() {
-  testWidgets('Swipe widgets tests', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
+  testWidgets(
+    'Swipe widgets tests',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(MyApp());
 
-    await tester.idle();
-    await tester.pump(Duration.zero);
+      await tester.idle();
+      await tester.pump(Duration.zero);
 
-    // Check our widgets exists
-    expect(
-        find.byWidgetPredicate(
-            (Widget widget) => widget is SquaredButton && widget.title == '-'),
-        findsOneWidget);
-    expect(find.widgetWithText(SquaredButton, '+'), findsOneWidget);
-    expect(find.byWidgetPredicate((Widget widget) => widget is CentralBox),
-        findsOneWidget);
+      // Check our widgets exists
+      expect(
+          find.byWidgetPredicate((Widget widget) =>
+              widget is SquaredButton && widget.title == '-'),
+          findsOneWidget);
+      expect(find.widgetWithText(SquaredButton, '+'), findsOneWidget);
+      expect(find.byWidgetPredicate((Widget widget) => widget is CentralBox),
+          findsOneWidget);
 
-    // Check that BLoC has initialised
-    expect(find.widgetWithText(CentralBox, '1'), findsOneWidget);
+      // Check that BLoC has initialised
+      expect(find.widgetWithText(CentralBox, '1'), findsOneWidget);
 
-    // Check that number increased / decreased
-    await tester.tap(find.widgetWithText(SquaredButton, '+'));
-    await tester.pump(Duration.zero);
-    expect(find.widgetWithText(CentralBox, '1'), findsOneWidget);
-  });
+      // Check that number increased / decreased
+      await tester.tap(find.widgetWithText(SquaredButton, '+'));
+      await tester.pump(Duration.zero);
+      await tester.fling(
+          find.widgetWithText(CentralBox, '1'), Offset(300.0, 300.0), 1.0);
+      await tester.pumpAndSettle();
+      await Future.microtask(tester.pump);
+      expect(find.widgetWithText(CentralBox, '2'), findsOneWidget);
+    },
+  );
 }

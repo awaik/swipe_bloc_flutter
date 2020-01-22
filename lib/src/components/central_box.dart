@@ -20,6 +20,7 @@ class CentralBox extends StatelessWidget {
           child: Center(
             child: Text(
               title,
+              key: Key('counterKey'),
               style: TextStyle(fontSize: 24.0),
             ),
           ),
