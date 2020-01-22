@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:test_swipes/src/components/rounded_button.dart';
 import 'package:test_swipes/src/components/squared_button.dart';
 import 'package:test_swipes/src/components/central_box.dart';
-import 'package:test_swipes/src/bloc/swipes/SwipesBloc.dart';
+import 'package:test_swipes/src/bloc/swipes/swipes_block.dart';
+import 'package:test_swipes/src/screens/counter_data/counter_data.dart';
 
 class SwipeScreen extends StatefulWidget {
   static String id = 'swipe_screen';
@@ -90,12 +91,24 @@ class _SwipeScreenState extends State<SwipeScreen>
                         ],
                       ),
                     ),
-                    RoundedButton(
-                      color: Color(0xFFEC706E),
-                      title: 'Reset',
-                      onPressed: () {
-                        _swipesBloc.resetCount;
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        RoundedButton(
+                          color: Color(0xFFEC706E),
+                          title: 'Reset',
+                          onPressed: () {
+                            _swipesBloc.resetCount;
+                          },
+                        ),
+                        RoundedButton(
+                          color: Color(0xFF999999),
+                          title: 'To data screen',
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(CounterData.id);
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -129,6 +142,21 @@ class _SwipeScreenState extends State<SwipeScreen>
                       )),
                 ),
               ),
+//              Column(
+//                mainAxisAlignment: MainAxisAlignment.end,
+//                crossAxisAlignment: CrossAxisAlignment.center,
+//                children: <Widget>[
+//                  Center(
+//                    child: RoundedButton(
+//                      color: Color(0xFFaaaaaa),
+//                      title: 'Go to counter data',
+//                      onPressed: () {
+//                        Navigator.of(context).pushNamed(CounterData.id);
+//                      },
+//                    ),
+//                  ),
+//                ],
+//              ),
             ],
           );
         },
