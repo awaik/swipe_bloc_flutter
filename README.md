@@ -1,4 +1,4 @@
-# BLoC pattern + provider + shared preferneces + tests
+# BLoC pattern + provider + shared preferences + tests
 
 An app created as example for article.
 
