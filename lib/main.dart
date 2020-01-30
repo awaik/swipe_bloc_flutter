@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<SwipesBloc>(create: (_) => SwipesBloc()),
+        Provider<SwipesBloc>(
+          create: (_) => SwipesBloc(),
+          dispose: (_, SwipesBloc swipesBloc) => swipesBloc.dispose(),
+        ),
       ],
       child: MaterialApp(
         title: 'Swipe BLoC + Provider',

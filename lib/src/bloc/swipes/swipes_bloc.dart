@@ -19,12 +19,11 @@ class SwipesBloc {
   }
 
   final _counterStream = BehaviorSubject<int>.seeded(1);
-
   Stream get pressedCount => _counterStream.stream;
-  void get resetCount => _actionController.sink.add(null);
   Sink get _addValue => _counterStream.sink;
 
   StreamController _actionController = StreamController();
+  void get resetCount => _actionController.sink.add(null);
   StreamSink get incrementCounter => _actionController.sink;
 
   void _changeStream(data) async {
